@@ -14,6 +14,26 @@ public class TxtGraphicsConverter implements TextGraphicsConverter {
     private int maxWidth = 1000000;
 
     @Override
+    public void setMaxWidth(int width) {
+        this.maxWidth = width;
+    }
+
+    @Override
+    public void setMaxHeight(int height) {
+        this.maxHeight = height;
+    }
+
+    @Override
+    public void setMaxRatio(double maxRatio) {
+        this.maxRatio = maxRatio;
+    }
+
+    @Override
+    public void setTextColorSchema(TextColorSchema schema) {
+
+    }
+
+    @Override
     public String convert(String url) throws IOException, BadImageSizeException {
 
         BufferedImage img = ImageIO.read(new URL(url));
@@ -22,7 +42,7 @@ public class TxtGraphicsConverter implements TextGraphicsConverter {
                 img.getHeight() / img.getWidth());
 
         if (ratio > maxRatio) {
-            new BadImageSizeException(ratio, maxRatio);
+            throw new BadImageSizeException(ratio, maxRatio);
         }
 
         int newWidth = img.getWidth();
@@ -69,25 +89,5 @@ public class TxtGraphicsConverter implements TextGraphicsConverter {
         }
 
         return stringImages;
-    }
-
-    @Override
-    public void setMaxWidth(int width) {
-        this.maxWidth = width;
-    }
-
-    @Override
-    public void setMaxHeight(int height) {
-        this.maxHeight = height;
-    }
-
-    @Override
-    public void setMaxRatio(double maxRatio) {
-        this.maxRatio = maxRatio;
-    }
-
-    @Override
-    public void setTextColorSchema(TextColorSchema schema) {
-
     }
 }
