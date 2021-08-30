@@ -48,13 +48,13 @@ public class TxtGraphicsConverter implements TextGraphicsConverter {
         int newWidth = img.getWidth();
         int newHeight = img.getHeight();
 
-        if (img.getWidth() > maxWidth || img.getHeight() > maxHeight) {
+        if (newWidth > maxWidth || newHeight > maxHeight) {
 
-            double scaledRatio = (img.getHeight() / maxHeight > img.getWidth() / maxWidth ?
-                    img.getHeight() / maxHeight : img.getWidth() / maxWidth);
+            double scaledRatio = (newHeight / maxHeight > newWidth / maxWidth ?
+                    newHeight / maxHeight : newWidth / maxWidth);
 
-            newHeight = (int) (img.getHeight() / scaledRatio);
-            newWidth = (int) (img.getWidth() / scaledRatio);
+            newHeight = (int) (newHeight / scaledRatio);
+            newWidth = (int) (newWidth / scaledRatio);
         }
 
         Image scaledImage = img.getScaledInstance(newWidth, newHeight, BufferedImage.SCALE_SMOOTH);
@@ -69,7 +69,7 @@ public class TxtGraphicsConverter implements TextGraphicsConverter {
 
         char[][] charImages = new char[newWidth][newHeight];
 
-        String stringImages = null;
+        String stringImages = " ";
 
         TextColorSchema schema = new TxtColorSchema();
 
@@ -79,6 +79,18 @@ public class TxtGraphicsConverter implements TextGraphicsConverter {
                 char c = schema.convert(color);
                 charImages[w][h] = c;
             }
+        }
+
+//        System.out.println(charImages[252][299]);
+//        System.out.println(charImages[12][0]);
+//        System.out.println(charImages.length);
+//        System.out.println(charImages[0].length);
+
+        for (int w = 0; w < newWidth; w++) {
+            for (int h = 0; h < newHeight; h++) {
+                System.out.print(charImages[w][h]);
+            }
+            System.out.println();
         }
 
         for (int w = 0; w < newWidth; w++) {
